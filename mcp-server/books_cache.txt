@@ -1,0 +1,37 @@
+
+Object Length: 136
+Title: Atomic Habits,
+Author(s): James Clear,
+Published Date: 2018-10-18,
+Maturity Rating: NOT_MATURE
+---------------------------------
+Object Length: 164
+Title: Harry Potter and the Prisoner of Azkaban,
+Author(s): J.K. Rowling,
+Published Date: 2015-12-08,
+Maturity Rating: NOT_MATURE
+---------------------------------
+Object Length: 163
+Title: Harry Potter and the Chamber of Secrets,
+Author(s): J.K. Rowling,
+Published Date: 2015-12-08,
+Maturity Rating: NOT_MATURE
+---------------------------------
+Object Length: 160
+Title: Hands-On Data Analysis with Pandas,
+Author(s): Stefanie Molin,
+Published Date: 2021-04-29,
+Maturity Rating: NOT_MATURE
+---------------------------------
+Object Length: 155
+Title: Python Data Science Handbook,
+Author(s): Jake VanderPlas,
+Published Date: 2022-12-06,
+Maturity Rating: NOT_MATURE
+---------------------------------
+Object Length: 185
+Title: Introduction to Machine Learning with Python,
+Author(s): Andreas C. Müller,Sarah Guido,
+Published Date: 2016-09-26,
+Maturity Rating: NOT_MATURE
+---------------------------------
