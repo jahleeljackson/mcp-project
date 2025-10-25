@@ -1,5 +1,4 @@
 #(to add server to claude)mcp-server % uv run mcp install server.py
-import argparse
 from mcp.server.fastmcp import FastMCP 
 import httpx 
 from dotenv import load_dotenv 
@@ -159,8 +158,6 @@ def count_books() -> int:
     return count
 
 
-# this function would typically be a resource, but ollama-mcp-bridge fails to work with defined MCP resources
-# @mcp.tool()
 @mcp.resource('books://latest')
 def get_latest_cached_book(book: str) -> str:
     '''    Gets the latest book title from the cache
@@ -175,9 +172,6 @@ def get_latest_cached_book(book: str) -> str:
     return lines[-5][6:-2] if lines else "No books cached yet."
 
 
-
-# this function would typically be a prompt, but ollama-mcp-bridge fails to work with defined MCP resources
-# @mcp.tool()
 @mcp.prompt()
 def books_summary_prompt() -> str:
     '''
