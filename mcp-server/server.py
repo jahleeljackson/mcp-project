@@ -1,4 +1,5 @@
-#(to add server to claude)mcp-server % uv run mcp install main.py
+#(to add server to claude)mcp-server % uv run mcp install server.py
+import argparse
 from mcp.server.fastmcp import FastMCP 
 import httpx 
 from dotenv import load_dotenv 
@@ -16,11 +17,8 @@ BASE_URL = "https://www.googleapis.com/books/v1/volumes?q="
 BOOK_FILE = os.path.join(os.path.dirname(__file__), "books_cache.txt")
 
 
+logging.getLogger("httpx").setLevel(logging.WARNING)
 
-'''
-Creating tool to retrieve books from Google Books API
-Books that are retrieved are then stored in a .txt file for easier/quicker future calls
-'''
 
 @mcp.tool()
 def get_book(book: str) -> list:
@@ -33,17 +31,13 @@ def get_book(book: str) -> list:
     Returns:
         str: A list of 5 books from Google Books API.
     '''
-    if book_in_cache(book):
-        from_cache = find_book_in_cache(book)
-        if from_cache:
-            return from_cache
+    from_cache = find_book_in_cache(book)
+    if from_cache:
+        return from_cache
         
-
-
     url = format_url(book)
     try:
         response = httpx.request('GET', url)
-        response.raise_for_status()
         json = response.json()
         bookInfo = json['items'][0]['volumeInfo']
         title = bookInfo['title']
@@ -52,6 +46,7 @@ def get_book(book: str) -> list:
         maturity_rating = bookInfo['maturityRating']
         formatted_string = format_response(title, authors, published_date, maturity_rating)
         write_to_file(formatted_string)
+        logging.info("API Request")
 
         return formatted_string
     
@@ -67,16 +62,40 @@ def find_book_in_cache(book: str) -> str:
         lines = f.readlines()
         for i in range(len(lines)):
             if lines[i][:7] == "Title: ":
-                possible_match = lines[i][7:-2]
+                possible_match = lines[i][7:].strip()[:-1]
                 possible_match_to_list = possible_match.split()
                 joined_possible_match = "".join(possible_match_to_list).lower()
 
                 book_to_list = book.split()
                 joined_book = "".join(book_to_list).lower()
 
-                if joined_book == joined_possible_match: 
-                    logging.info("Book info retrieved from cache.")
-                    return "".join(lines[i:i+4])
+                if len(joined_book) > len(joined_possible_match):
+                    windows = len(joined_book) - len(joined_possible_match) + 1
+                    l = 0
+                    r = len(joined_possible_match)
+                    for i in range(windows):
+                        if joined_possible_match == joined_book[l:r]:
+                            logging.info("Book info retrieved from cache.")
+                            return "".join(lines[i:i+4])
+                        else: 
+                            l += 1
+                            r += 1
+                elif len(joined_possible_match) > len(joined_book):
+                    windows = len(joined_possible_match) - len(joined_book) + 1
+                    l = 0
+                    r = len(joined_book)
+                    for i in range(windows):
+                        if joined_book == joined_possible_match[l:r]:
+                            logging.info("Book info retrieved from cache.")
+                            return "".join(lines[i:i+4])
+                        else:
+                            l += 1
+                            r += 1
+                else:
+                    if joined_possible_match == joined_book:
+                        logging.info("Book info retrieved from cache.")
+                        return "".join(lines[i:i+4])
+
                 
         return None
      
@@ -147,7 +166,7 @@ def book_in_cache(book: str) -> bool:
     word_list = content.split()
     joined_content = "".join(word_list).lower()
 
-    book_title_list = book.split()
+    book_title_list = book.split()  
     joined_book = "".join(book_title_list).lower()
 
     #implementing sliding window algorithm for match to book of interest
@@ -209,9 +228,29 @@ def note_summary_prompt() -> str:
 
 
 if __name__ == "__main__":
-    
-    print(get_book('Introduction to Machine Learning with Python'))
+
+    #for testing
+    # while True:
+        # book = input("What books would you like?: \n")
+        # if book == "quit":
+            # break
+        # get_book(book)
+
+    logging.info("Starting Find Book Server")
 
 
+    #debug mode
+    # uv run mcp dev server.py 
 
-    #simulate call to mcp server
+    #production mode 
+    # uv run server.py --server_type=sse 
+
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--server_type", type=str, default="sse", choices=["sse", "stdio"]
+    )
+
+    args = parser.parse_args()
+    mcp.run(args.server_type)
+

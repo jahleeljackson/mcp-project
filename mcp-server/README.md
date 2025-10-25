@@ -65,7 +65,7 @@ Each book entry includes:
 Run the following command from the project directory:
 
 ```bash
-uv run mcp install main.py
+uv run mcp install server.py
 ```
 
 This will register the server with Claude Desktop.
@@ -87,9 +87,9 @@ Add the following configuration:
       "command": "uv",
       "args": [
         "--directory",
-        "/Users/jahleeljackson/Desktop/Projects/sandbox/mini_projects/mcp_project/mcp-server",
+        "/Users/your-path/to-project/mcp-server",
         "run",
-        "main.py"
+        "server.py"
       ],
       "env": {
         "API_KEY": "your_google_books_api_key_here"
