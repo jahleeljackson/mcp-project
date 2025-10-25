@@ -5,6 +5,7 @@ import httpx
 from dotenv import load_dotenv 
 import os 
 import logging
+from loguru import logger
 
 mcp = FastMCP("Find Books")
 
@@ -75,7 +76,7 @@ def find_book_in_cache(book: str) -> str:
                     r = len(joined_possible_match)
                     for i in range(windows):
                         if joined_possible_match == joined_book[l:r]:
-                            logging.info("Book info retrieved from cache.")
+                            logger.info("Book info retrieved from cache.")
                             return "".join(lines[i:i+4])
                         else: 
                             l += 1
@@ -86,14 +87,14 @@ def find_book_in_cache(book: str) -> str:
                     r = len(joined_book)
                     for i in range(windows):
                         if joined_book == joined_possible_match[l:r]:
-                            logging.info("Book info retrieved from cache.")
+                            logger.info("Book info retrieved from cache.")
                             return "".join(lines[i:i+4])
                         else:
                             l += 1
                             r += 1
                 else:
                     if joined_possible_match == joined_book:
-                        logging.info("Book info retrieved from cache.")
+                        logger.info("Book info retrieved from cache.")
                         return "".join(lines[i:i+4])
 
                 
@@ -230,27 +231,27 @@ def note_summary_prompt() -> str:
 if __name__ == "__main__":
 
     #for testing
-    # while True:
-        # book = input("What books would you like?: \n")
-        # if book == "quit":
-            # break
-        # get_book(book)
+    while True:
+        book = input("What books would you like information on?: \n")
+        if book.strip().lower() == "quit":
+            break
+        print(get_book(book))
 
-    logging.info("Starting Find Book Server")
-
-
-    #debug mode
-    # uv run mcp dev server.py 
-
-    #production mode 
-    # uv run server.py --server_type=sse 
+    # logger.info("Starting Find Book Server")
 
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--server_type", type=str, default="sse", choices=["sse", "stdio"]
-    )
+    # #debug mode
+    # # uv run mcp dev server.py 
 
-    args = parser.parse_args()
-    mcp.run(args.server_type)
+    # #production mode 
+    # # uv run server.py --server_type=sse 
+
+
+    # parser = argparse.ArgumentParser()
+    # parser.add_argument(
+    #     "--server_type", type=str, default="sse", choices=["sse", "stdio"]
+    # )
+
+    # args = parser.parse_args()
+    # mcp.run(args.server_type)
 

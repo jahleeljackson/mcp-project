@@ -1,0 +1,15 @@
+{
+    "mcpServers": {
+      "Find Books": {
+        "command": "/Users/jahleeljackson/.local/bin/uv",
+        "args": [
+          "run",
+          "--with",
+          "mcp[cli]",
+          "mcp",
+          "run",
+          "/Users/jahleeljackson/Desktop/Projects/sandbox/mini_projects/mcp_project/mcp-server/server.py"
+        ]
+      }
+    }
+  }

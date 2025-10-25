@@ -11,3 +11,21 @@ Author(s): Jake VanderPlas,
 Published Date: 2022-12-06,
 Maturity Rating: NOT_MATURE
 ---------------------------------
+Object Length: 156
+Title: The Papers of Alexander Hamilton,
+Author(s): Alexander Hamilton,
+Published Date: 1977,
+Maturity Rating: NOT_MATURE
+---------------------------------
+Object Length: 136
+Title: Atomic Habits,
+Author(s): James Clear,
+Published Date: 2018-10-18,
+Maturity Rating: NOT_MATURE
+---------------------------------
+Object Length: 162
+Title: Crime and Punishment,
+Author(s): Fyodor Dostoyevsky,Constance Garnett,
+Published Date: 2001,
+Maturity Rating: NOT_MATURE
+---------------------------------
