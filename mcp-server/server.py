@@ -159,9 +159,9 @@ def count_books() -> int:
     return count
 
 
-# @mcp.resource('books://latest')
 # this function would typically be a resource, but ollama-mcp-bridge fails to work with defined MCP resources
-@mcp.tool()
+# @mcp.tool()
+@mcp.resource('books://latest')
 def get_latest_cached_book(book: str) -> str:
     '''    Gets the latest book title from the cache
 
@@ -176,9 +176,9 @@ def get_latest_cached_book(book: str) -> str:
 
 
 
-# @mcp.prompt()
 # this function would typically be a prompt, but ollama-mcp-bridge fails to work with defined MCP resources
-@mcp.tool()
+# @mcp.tool()
+@mcp.prompt()
 def books_summary_prompt() -> str:
     '''
     Generate a prompt to summarize the major themes of books in the current cache.

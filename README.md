@@ -63,7 +63,7 @@ cd mcp-client
 uv sync
 
 # Ensure Ollama is running
-ollama pull mistral:latest  # or your preferred model
+ollama pull gpt-oss  # or your preferred model
 
 # Start the Ollama MCP Bridge
 ollama-mcp-bridge
@@ -100,14 +100,12 @@ mcp_project/
 │   ├── server.py           # Main server code
 │   ├── pyproject.toml      # Server dependencies
 │   ├── .env               # API keys (not in git)
-│   ├── books_cache.txt    # Book cache storage
-│   └── README.md          # Server documentation
+│   └── books_cache.txt    # Book cache storage
 │
 ├── mcp-client/              # Streamlit chat client
 │   ├── frontend.py         # Streamlit UI
 │   ├── pyproject.toml      # Client dependencies
-│   ├── mcp-config.json     # MCP server configuration
-│   └── README.md          # Client documentation
+│   └── mcp-config.json     # MCP server configuration
 │
 ├── .gitignore
 └── README.md               # This file
@@ -143,7 +141,7 @@ Can you summarize the themes from cached books?
 
 ```toml
 [project]
-model = "mistral:latest"  # Change to your preferred Ollama model
+model = "gpt-oss"  # Change to your preferred Ollama model
 host = "0.0.0.0"
 port = "8000"
 ```
