@@ -159,49 +159,14 @@ def count_books() -> int:
     return count
 
 
-def book_in_cache(book: str) -> bool:
-    content = retrieve_file()
-    if not content:
-        return False 
-    
-    word_list = content.split()
-    joined_content = "".join(word_list).lower()
-
-    book_title_list = book.split()  
-    joined_book = "".join(book_title_list).lower()
-
-    #implementing sliding window algorithm for match to book of interest
-    file_length = len(joined_content)
-    l = 0
-    r = len(joined_book)
-    windows = file_length - r
-    for i in range(windows):
-        if joined_book == joined_content[l:r]:
-            return True 
-        else: 
-            l += 1
-            r += 1
-    
-    return False
-
-
-# Helper to book_in_cache()
-def retrieve_file() -> str:
-    with open(BOOK_FILE, 'r') as f:
-        content = f.read()
-        if not content:
-            return None
-        return content
-    
-
-
-@mcp.resource('books://latest')
-def get_latest_book() -> str:
-    '''
-    Gets the latest book from the file
+# @mcp.resource('books://latest')
+# this function would typically be a resource, but ollama-mcp-bridge fails to work with defined MCP resources
+@mcp.tool()
+def get_latest_cached_book(book: str) -> str:
+    '''    Gets the latest book title from the cache
 
     Return:
-        str: The latest book from the text file.
+        str: The latest book title from the text cache.
     '''
 
     with open(BOOK_FILE, 'r') as f:
@@ -211,8 +176,10 @@ def get_latest_book() -> str:
 
 
 
-@mcp.prompt()
-def note_summary_prompt() -> str:
+# @mcp.prompt()
+# this function would typically be a prompt, but ollama-mcp-bridge fails to work with defined MCP resources
+@mcp.tool()
+def books_summary_prompt() -> str:
     '''
     Generate a prompt to summarize the major themes of books in the current cache.
     
@@ -231,27 +198,11 @@ def note_summary_prompt() -> str:
 if __name__ == "__main__":
 
     #for testing
-    while True:
-        book = input("What books would you like information on?: \n")
-        if book.strip().lower() == "quit":
-            break
-        print(get_book(book))
-
-    # logger.info("Starting Find Book Server")
+    # while True:
+        # book = input("What books would you like information on?: \n")
+        # if book.strip().lower() == "quit":
+            # break
+        # print(get_book(book))
 
 
-    # #debug mode
-    # # uv run mcp dev server.py 
-
-    # #production mode 
-    # # uv run server.py --server_type=sse 
-
-
-    # parser = argparse.ArgumentParser()
-    # parser.add_argument(
-    #     "--server_type", type=str, default="sse", choices=["sse", "stdio"]
-    # )
-
-    # args = parser.parse_args()
-    # mcp.run(args.server_type)
-
+    print(books_summary_prompt())

@@ -18,7 +18,8 @@ st.set_page_config(page_title="Local MCP-enabled Chatbot")
 
 with st.sidebar:
     st.title("Local MCP Client-Server")
-    st.markdown("This is a basic chatbot which utilizes a custom MCP server for basic tool calling.")
+    st.markdown("This is a basic chatbot which utilizes a custom MCP server for retrieving information about books, \
+                retrieving the latest book, and summarizing the major themes of a list of books.")
 
 
 # function for generating LLM response
@@ -73,7 +74,6 @@ if input := st.chat_input():
 if st.session_state.messages[-1]["role"] != "Machine Learning Tutor":
     with st.chat_message("Machine Learning Tutor"):
         with st.spinner("Generating an answer for you..."):
-            #context = get_context()
             response = generate_response(input) 
             st.write(response) 
     message = {"role": "Machine Learning Tutor", "content": response}
