@@ -159,7 +159,7 @@ def count_books() -> int:
 
 
 @mcp.resource('books://latest')
-def get_latest_cached_book(book: str) -> str:
+def get_latest_cached_book() -> str:
     '''    Gets the latest book title from the cache
 
     Return:
