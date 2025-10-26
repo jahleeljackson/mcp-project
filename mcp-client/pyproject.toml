@@ -1,6 +1,6 @@
 [project]
 name = "mcp-client"
-model = "deepseek-r1:8b"
+model = "mistral:latest"
 host = "0.0.0.0"
 port = "8000"
 version = "0.1.0"
