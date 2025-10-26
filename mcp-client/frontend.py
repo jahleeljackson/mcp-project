@@ -45,7 +45,7 @@ def generate_response(prompt):
       }
     }
 
-    response = httpx.request('POST', PROMPT_POST_URL, json=data, timeout=20.0)     
+    response = httpx.request('POST', PROMPT_POST_URL, json=data, timeout=120.0)     
     
     if response.status_code != 200:
         st.error("Error generating response. Please try again later.")

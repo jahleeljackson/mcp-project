@@ -63,7 +63,7 @@ cd mcp-client
 uv sync
 
 # Ensure Ollama is running
-ollama pull gpt-oss  # or your preferred model
+ollama pull deepseek-r1:8b  # or your preferred model
 
 # Start the Ollama MCP Bridge
 ollama-mcp-bridge
@@ -141,7 +141,7 @@ Can you summarize the themes from cached books?
 
 ```toml
 [project]
-model = "gpt-oss"  # Change to your preferred Ollama model
+model = "deepseek-r1:8b"  # Change to your preferred Ollama model
 host = "0.0.0.0"
 port = "8000"
 ```
